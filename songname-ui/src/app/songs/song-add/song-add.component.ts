@@ -29,7 +29,9 @@ export class SongAddComponent implements OnInit {
   }
 
   onCreateSong(title: string) {
-    this.songsService.addSong(title, this.authorUuid, this.songFile).subscribe(response => {
+    let authors = [];
+    authors.push(this.authorUuid);
+    this.songsService.addSong(title, authors, this.songFile).subscribe(response => {
       if (response.status === 201) {
         this.updateSongsListEvent.emit();
       }

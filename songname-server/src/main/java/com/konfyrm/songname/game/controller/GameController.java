@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -86,11 +85,12 @@ public class GameController {
     public ResponseEntity<Boolean> checkSong(@RequestBody CheckSongRequest request) {
         Optional<Song> song = songsService.getSongById(request.getUuid());
         if (song.isPresent()) {
-            Author author = song.get().getAuthor();
+            List<Author> authors = song.get().getAuthors();
             return ResponseEntity.ok(
                     gameService.compareAnswer(request.getTitle(), song.get().getTitle()) &&
-                            gameService.compareAnswer(request.getAuthorName(), author.getName())
-            );
+                            gameService.compareAnswers(request.getAuthorNames(),
+                                    authors.stream().map(Author::getName).collect(Collectors.toList())
+                            ));
         }
         return ResponseEntity.notFound().build();
     }

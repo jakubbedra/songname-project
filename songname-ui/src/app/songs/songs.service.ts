@@ -11,17 +11,10 @@ export class SongsService {
   constructor(private http: HttpClient) {
   }
 
-  /**todo
-   * jak zrobic ta checkliste jacy autorzy i utworzy maja byc w grze?
-   * -lista z checkboxami, domyslnie wszystko zaznaczone
-   * -odznaczamy to czego nie chcemy (lista tych ktore chcemy generowana jest przez
-   * frondend)
-   * -wysylamy liste uuid utworow i autorow z ktorych bedzie losowanie
-   */
-  addSong(title: string, authorUuid: string, file: File) {
+  addSong(title: string, authorUuids: string[], file: File) {
     const songData = new Blob([JSON.stringify({
       'title': title,
-      'authorUuid': authorUuid
+      'authorUuids': authorUuids
     })], {type: "application/json"});
     const formData = new FormData();
     formData.append('info', songData);
@@ -55,6 +48,7 @@ export class SongsService {
   fetchAuthorSongs(uuid: string): Observable<Song[]> {
     return this.http.get<Song[]>(environment.apiURL + '/api/authors/' + uuid + '/songs')
       .pipe(map(responseData => {
+        console.log(responseData);
         let songs: Song[] = [];
         for (const key in responseData) {
           if (responseData.hasOwnProperty(key)) {
@@ -68,8 +62,9 @@ export class SongsService {
       }));
   }
 
-  updateSong(uuid: string, title: string, authorUuid: string): Observable<any> {
-    const songData = {title: title, authorUuid: authorUuid};
+  updateSong(uuid: string, title: string, authorUuids: string[]): Observable<any> {
+    const songData = {title: title, authorUuids: authorUuids};
+    console.log(songData);
     return this.http.put(environment.apiURL + '/api/songs/' + uuid, songData, {observe: 'response'});
   }
 

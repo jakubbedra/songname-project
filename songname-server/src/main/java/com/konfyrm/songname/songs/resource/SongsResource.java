@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @RequestMapping("/api/songs")
@@ -69,9 +70,11 @@ public class SongsResource {
     public ResponseEntity<Void> createSong(@RequestPart("file") MultipartFile file,
                                            @RequestPart("info") CreateSongRequest request,
                                            UriComponentsBuilder builder) throws IOException {
-        Optional<Author> author = authorsService.getAuthorById(request.getAuthorUuid());
-        if (author.isPresent()) {
-            Song song = new Song(request.getTitle(), author.get());
+        List<Author> authors = request.getAuthorUuids().stream()
+                .map(au -> authorsService.getAuthorById(au).get())
+                .collect(Collectors.toList());
+        if (!authors.isEmpty()) {
+            Song song = new Song(request.getTitle(), authors);
             songsService.addSong(song);
             songsService.uploadFile(song.getUuid(), file.getInputStream());
             return ResponseEntity.created(builder.pathSegment("api", "songs", "{uuid}")
@@ -95,9 +98,11 @@ public class SongsResource {
     @PutMapping("/{uuid}")
     public ResponseEntity<Void> updateSong(@RequestBody UpdateSongRequest request, @PathVariable("uuid") String uuid) {
         Optional<Song> song = songsService.getSongById(UUID.fromString(uuid));
-        Optional<Author> author = authorsService.getAuthorById(request.getAuthorUuid());
-        if (song.isPresent() && author.isPresent()) {
-            song.get().setAuthor(author.get());
+        List<Author> authors = request.getAuthorUuids().stream()
+                .map(au -> authorsService.getAuthorById(au).get())
+                .collect(Collectors.toList());
+        if (song.isPresent() && !authors.isEmpty()) {
+            song.get().setAuthors(authors);
             song.get().setTitle(request.getTitle());
             songsService.updateSong(song.get());
             return ResponseEntity.accepted().build();

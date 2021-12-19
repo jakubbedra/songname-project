@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class DataManager {
@@ -42,14 +43,16 @@ public class DataManager {
         authorsService.addAuthor(malik);
         authorsService.addAuthor(alberto);
 
-        Song song1 = new Song("Mordo weź", malik);
-        Song song2 = new Song("6.3 AMG", malik);
-        Song song3 = new Song("Dwutakt", alberto);
-        Song song4 = new Song("Strzał", alberto);
+        Song song1 = new Song("Mordo weź", List.of(malik));
+        Song song2 = new Song("6.3 AMG", List.of(malik));
+        Song song3 = new Song("Dwutakt", List.of(alberto));
+        Song song4 = new Song("Strzał", List.of(alberto));
+        Song song5 = new Song("Ołów", List.of(malik, alberto));
         songsService.addSong(song1);
         songsService.addSong(song2);
         songsService.addSong(song3);
         songsService.addSong(song4);
+        songsService.addSong(song5);
     }
 
     public void exportDataToFile() {
@@ -60,7 +63,7 @@ public class DataManager {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(new File(jsonFilesDirectory + "authors.json"), authorsDto);//TODO!!!!!!!
+            mapper.writeValue(new File(jsonFilesDirectory + "authors.json"), authorsDto);
             mapper.writeValue(new File(jsonFilesDirectory + "songs.json"), songsDto);
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,8 +91,9 @@ public class DataManager {
             );
             List<Song> songs = new LinkedList<>();
             songsDto.getSongs().forEach(s ->
-                    songs.add(new Song(s.getUuid(), s.getTitle(), authorsMap.get(s.getAuthorUuid())))
-            );
+                    songs.add(new Song(s.getUuid(), s.getTitle(), s.getAuthorUuids().stream()
+                            .map(authorsMap::get).collect(Collectors.toList())
+                    )));
             songs.forEach(songsService::addSong);
         } catch (IOException e) {
             e.printStackTrace();

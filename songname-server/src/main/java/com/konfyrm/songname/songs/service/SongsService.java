@@ -1,5 +1,7 @@
 package com.konfyrm.songname.songs.service;
 
+import com.konfyrm.songname.authors.model.Author;
+import com.konfyrm.songname.authors.repository.AuthorsRepository;
 import com.konfyrm.songname.songs.repository.SongFilesRepository;
 import com.konfyrm.songname.songs.repository.SongsRepository;
 import com.konfyrm.songname.songs.model.Song;
@@ -16,14 +18,17 @@ import java.util.stream.Collectors;
 public class SongsService {
 
     private final SongsRepository songsRepository;
+    private final AuthorsRepository authorsRepository;
     private final SongFilesRepository filesRepository;
 
     @Autowired
     public SongsService(
             SongsRepository songsRepository,
+            AuthorsRepository authorsRepository,
             SongFilesRepository songFilesRepository
     ) {
         this.songsRepository = songsRepository;
+        this.authorsRepository = authorsRepository;
         this.filesRepository = songFilesRepository;
     }
 
@@ -36,9 +41,10 @@ public class SongsService {
     }
 
     public List<Song> getAuthorSongs(UUID authorUuid) {
+        Optional<Author> author = authorsRepository.findById(authorUuid);
         List<Song> songs = (List<Song>) songsRepository.findAll();
         return songs.stream()
-                .filter(s -> s.getAuthor().getUuid().equals(authorUuid))
+                .filter(s -> authorshipExists(author.get(), s))
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +78,6 @@ public class SongsService {
         songsRepository.deleteById(uuid);
     }
 
-    @Transactional
     public void updateSong(Song song) {
         songsRepository.deleteById(song.getUuid());
         songsRepository.save(song);
@@ -110,6 +115,10 @@ public class SongsService {
                 e.printStackTrace();
             }
         });
+    }
+
+    private boolean authorshipExists(Author author, Song song) {
+        return song.getAuthors().stream().anyMatch(a -> a.getUuid().equals(author.getUuid()));
     }
 
 }

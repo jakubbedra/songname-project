@@ -18,7 +18,7 @@ public class Author implements Serializable {
     @Column(name = "author_name")
     private String name;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "author")
+    @ManyToMany
     private List<Song> songs;
 
     public Author() {

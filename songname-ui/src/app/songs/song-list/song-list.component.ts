@@ -28,7 +28,6 @@ export class SongListComponent implements OnInit {
   }
 
   fetchSongs() {
-    console.log('dupa fetch');
     this.songsService.fetchAuthorSongs(this.authorUuid).subscribe(response => {
       this.songs = response;
     });

@@ -1,9 +1,22 @@
 <article class="text--justified">
   <header><h2 class="header">Edit song info</h2></header>
+  <div class="authors-list-div">
+    <h4>Authors:</h4>
+    <span>
+      <span *ngFor="let author of selectedAuthorUuids; let last = last;">
+        {{authorName(author)}}<p *ngIf="!last">,&nbsp;</p>
+      </span>
+    </span>
+  </div>
   <form class="song__form" id="songForm">
+    <input list="authors" class="ui-control ui-input" id="author" #author/>
+    <datalist id="authors">
+      <option *ngFor="let author of authors" value="{{author.uuid}}">{{author.name}}</option>
+    </datalist>
+    <input class="ui-control ui-button" type="button" (click)="onAuthorAdd(author.value)" value="Add author"/>
     <label for="title">Title: </label>
-    <input class="ui-control ui-input" id="title" name="title"/>
-    <input class="ui-control ui-button" type="submit" value="save changes"/>
+    <input class="ui-control ui-input" id="title" name="title" #title/>
+    <input class="ui-control ui-button" type="button" (click)="onDataSave(title.value)" value="save changes"/>
   </form>
 </article>
 <article class="text--justified">

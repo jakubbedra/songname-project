@@ -1,17 +1,18 @@
 package com.konfyrm.songname.songs.dto;
 
+import java.util.List;
 import java.util.UUID;
 
 public class CheckSongRequest {
 
     private UUID uuid;
     private String title;
-    private String authorName;
+    private List<String> authorNames;
 
-    public CheckSongRequest(UUID uuid, String title, String authorName) {
+    public CheckSongRequest(UUID uuid, String title, List<String> authorNames) {
         this.uuid = uuid;
         this.title = title;
-        this.authorName = authorName;
+        this.authorNames = authorNames;
     }
 
     public UUID getUuid() {
@@ -22,8 +23,8 @@ public class CheckSongRequest {
         return title;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public List<String> getAuthorNames() {
+        return authorNames;
     }
 
     public void setUuid(UUID uuid) {
@@ -34,8 +35,8 @@ public class CheckSongRequest {
         this.title = title;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthorNames(List<String> authorNames) {
+        this.authorNames = authorNames;
     }
 
 }

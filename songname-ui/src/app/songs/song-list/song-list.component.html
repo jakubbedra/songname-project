@@ -5,6 +5,7 @@
       <thead>
       <tr>
         <th>uuid</th>
+        <th>author(s)</th>
         <th>title</th>
         <th>play</th>
         <th>edit</th>
@@ -14,6 +15,11 @@
       <tbody id="tableBody">
       <tr *ngFor="let song of songs">
         <td>{{song.uuid}}</td>
+        <td>
+          <span *ngFor="let author of song.authors; let last = last;" >
+            {{author}} <span *ngIf="!last">,&nbsp;</span>
+          </span>
+        </td>
         <td>{{song.title}}</td>
         <td>
           <button class="ui-button ui-control" routerLink="/songs/{{song.uuid}}/edit">edit</button>

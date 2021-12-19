@@ -28,11 +28,6 @@ public class GameService {
         this.answersManager = answersManager;
     }
 
-    /*
-      todo: create game from list of uuid of the players and songs
-      the game uuid will be stored as a path variable
-      and the game will be removed from map after finishing it
-     */
     public void createGame(UUID uuid, List<Player> players, List<Song> songs, int turns) {
         Game game = gameManager.createNewGame(
                 players.stream().map(Player::getUuid).collect(Collectors.toList()),
@@ -56,6 +51,25 @@ public class GameService {
 
     public boolean compareAnswer(String answer, String real) {
         return answersManager.compare(answer, real);
+    }
+
+    public boolean compareAnswers(List<String> answers, List<String> real) {
+        List<String> realAnswers = List.copyOf(real);
+        for (String answer : answers) {
+            boolean correct = false;
+            String toRemove = "";
+            for (String realAnswer : realAnswers) {
+                if (answersManager.compare(answer, realAnswer)) {
+                    correct = true;
+                    toRemove = realAnswer;
+                    break;
+                }
+            }
+            if (correct) {
+                realAnswers.remove(toRemove);
+            }
+        }
+        return realAnswers.size() == 0;
     }
 
 }

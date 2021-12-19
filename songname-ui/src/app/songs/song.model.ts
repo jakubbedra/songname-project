@@ -4,12 +4,12 @@ export class Song {
   public uuid: string;
   public title: string;
   public author: string;
-  //public authors: Author[];
+  public authors: string[];
 
-  constructor(uuid: string, title: string, author: string/*authors: Author[]*/) {
+  constructor(uuid: string, title: string, /*author: string*/authors: string[]) {
     this.uuid = uuid;
     this.title = title;
-    this.author = author;
-    //this.authors = authors;
+    //this.author = author;
+    this.authors = authors;
   }
 }

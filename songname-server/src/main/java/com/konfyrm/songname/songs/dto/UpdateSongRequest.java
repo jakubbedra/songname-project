@@ -1,31 +1,32 @@
 package com.konfyrm.songname.songs.dto;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UpdateSongRequest {
 
     private String title;
-    private UUID authorUuid;
+    private List<UUID> authorUuids;
 
-    public UpdateSongRequest(String title, UUID authorUuid) {
+    public UpdateSongRequest(String title, List<UUID> authorUuids) {
         this.title = title;
-        this.authorUuid = authorUuid;
+        this.authorUuids = authorUuids;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public UUID getAuthorUuid() {
-        return authorUuid;
+    public List<UUID> getAuthorUuids() {
+        return authorUuids;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setAuthorUuid(UUID authorUuid) {
-        this.authorUuid = authorUuid;
+    public void setAuthorUuids(List<UUID> authorUuids) {
+        this.authorUuids = authorUuids;
     }
 
 }

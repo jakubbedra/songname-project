@@ -9,15 +9,15 @@ public class GetSongsFileDto {
 
         private UUID uuid;
         private String title;
-        private UUID authorUuid;
+        private List<UUID> authorUuids;
 
         public SongGet() {
         }
 
-        public SongGet(UUID uuid, String title, UUID authorUuid) {
+        public SongGet(UUID uuid, String title, List<UUID> authorUuids) {
             this.uuid = uuid;
             this.title = title;
-            this.authorUuid = authorUuid;
+            this.authorUuids = authorUuids;
         }
 
         public UUID getUuid() {
@@ -28,16 +28,16 @@ public class GetSongsFileDto {
             return title;
         }
 
-        public UUID getAuthorUuid() {
-            return authorUuid;
+        public List<UUID> getAuthorUuids() {
+            return authorUuids;
         }
 
         public void setTitle(String title) {
             this.title = title;
         }
 
-        public void setAuthorUuid(UUID authorUuid) {
-            this.authorUuid = authorUuid;
+        public void setAuthorUuids(List<UUID> authorUuids) {
+            this.authorUuids = authorUuids;
         }
     }
 

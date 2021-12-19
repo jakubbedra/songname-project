@@ -1,0 +1,25 @@
+.ui-button {
+  padding-left: 5%;
+  padding-right: 5%;
+  font-size: 16px;
+  text-align: center;
+}
+
+.authors-list-div {
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+
+button {
+  float: left;
+}
+
+span {
+  color: white;
+  font-size: 16px;
+  display: flex;
+}
+
+h4 {
+  color: white;
+}

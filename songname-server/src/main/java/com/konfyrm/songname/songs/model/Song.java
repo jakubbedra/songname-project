@@ -4,6 +4,7 @@ import com.konfyrm.songname.authors.model.Author;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,23 +15,22 @@ public class Song implements Serializable {
     private UUID uuid;
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "author")
-    private Author author;
+    @ManyToMany
+    private List<Author> authors;
 
     public Song() {
     }
 
-    public Song(String title, Author author) {
+    public Song(String title, List<Author> authors) {
         this.uuid = UUID.randomUUID();
         this.title = title;
-        this.author = author;
+        this.authors = authors;
     }
 
-    public Song(UUID uuid, String title, Author author) {
+    public Song(UUID uuid, String title, List<Author> authors) {
         this.uuid = uuid;
         this.title = title;
-        this.author = author;
+        this.authors = authors;
     }
 
     public UUID getUuid() {
@@ -41,21 +41,21 @@ public class Song implements Serializable {
         return title;
     }
 
-    public Author getAuthor() {
-        return author;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     @Override
     public String toString() {
-        return "Song{ uuid: " + uuid + "; title: " + title + "; author: " + author.getName() + ";}";
+        return "Song{ uuid: " + uuid + "; title: " + title + ";}";
     }
 
 }
