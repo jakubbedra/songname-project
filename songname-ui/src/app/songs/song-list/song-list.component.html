@@ -1,0 +1,31 @@
+<article class="text--justified">
+  <section>
+    <h3 class="header">Songs</h3>
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>uuid</th>
+        <th>title</th>
+        <th>play</th>
+        <th>edit</th>
+        <th>delete</th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let song of songs">
+        <td>{{song.uuid}}</td>
+        <td>{{song.title}}</td>
+        <td>
+          <button class="ui-button ui-control" routerLink="/songs/{{song.uuid}}/edit">edit</button>
+        </td>
+        <td>
+          <button class="ui-button ui-control" (click)="onPlaySong(song.uuid)">play</button>
+        </td>
+        <td>
+          <button class="ui-button ui-control" (click)="onDeleteSong(song.uuid)">delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</article>

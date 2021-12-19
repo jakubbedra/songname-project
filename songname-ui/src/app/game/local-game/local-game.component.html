@@ -1,0 +1,72 @@
+<div class="game-div">
+  <div class="song-div" id="songDiv">
+    <article class="text--justified">
+      <header class="header"><h2>Try to guess the song!</h2></header>
+      <div class="answer-info answer-correct" *ngIf="answerState === 1">Correct!</div>
+      <div class="answer-info answer-wrong" *ngIf="answerState === -1">Wrong!</div>
+      <div class="points-div">
+        Points to obtain: {{this.songPlayer.points}}
+      </div>
+      <table class="song-table">
+        <tbody id="songTableBody">
+        <tr>
+          <td>
+            <button class="ui-control ui-button" (click)="onPlay()">play</button>
+          </td>
+          <td>
+            <button class="ui-control ui-button" (click)="onIncrement()">more</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="guess-div">
+        <form class="guess__form" id="guessForm">
+          <label for="author">Author: </label>
+          <input
+            [class.answer-wrong]="answerState === -1"
+            class="ui-control ui-input game-input"
+            id="author"
+            #author/>
+          <label for="title">Title: </label>
+          <input
+            [class.answer-wrong]="answerState === -1"
+            class="ui-control ui-input game-input"
+            id="title"
+            #title/>
+          <input *ngIf="answerState === 0"
+                 class="ui-control guess-button"
+                 type="button"
+                 value="GUESS"
+                 id="guessButton"
+                 (click)="onGuess(author.value, title.value)"/>
+          <input *ngIf="answerState !== 0"
+                 class="ui-control guess-button"
+                 type="button"
+                 value="NEXT TURN"
+                 id="nextTurnButton"
+                 (click)="onNextTurn()"/>
+        </form>
+      </div>
+    </article>
+  </div>
+  <div class="players-div" id="playersDiv">
+    <article class="text--justified">
+      <header class="header"><h2>Round: {{this.round}}</h2></header>
+      <table class="players-table">
+        <thead>
+        <tr>
+          <td>Player</td>
+          <td>Score</td>
+        </tr>
+        </thead>
+        <tbody id="playersTableBody">
+        <tr *ngFor="let player of players; let index = index;"
+            [class.current-player]="index === this.turn%players.length">
+          <td>{{player.name}}</td>
+          <td>{{player.score}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </div>
+</div>

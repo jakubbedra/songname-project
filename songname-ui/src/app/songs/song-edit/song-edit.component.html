@@ -1,0 +1,22 @@
+<article class="text--justified">
+  <header><h2 class="header">Edit song info</h2></header>
+  <form class="song__form" id="songForm">
+    <label for="title">Title: </label>
+    <input class="ui-control ui-input" id="title" name="title"/>
+    <input class="ui-control ui-button" type="submit" value="save changes"/>
+  </form>
+</article>
+<article class="text--justified">
+  <header><h2 class="header">Edit song file</h2></header>
+  <form class="song__form" id="fileForm">
+    <label for="file">File: </label>
+    <input
+      class="ui-control ui-button"
+      id="file"
+      name="file"
+      type="file"
+      (change)="onSelectFile($event)"/>
+    <input class="ui-control ui-button" type="submit" value="save changes"/>
+  </form>
+</article>
+

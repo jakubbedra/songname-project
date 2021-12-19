@@ -1,0 +1,11 @@
+<div class="center-div">
+  <div class="center-div">
+    <app-player-list #playerList></app-player-list>
+  </div>
+  <div class="config-div">
+    <app-game-config #gameConfig></app-game-config>
+  </div>
+</div>
+<div class="start-div">
+  <button class="start-button ui-control ui-button" id="start" (click)="onStartGame(gameConfig.turns)">Start Game</button>
+</div>

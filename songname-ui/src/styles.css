@@ -1,0 +1,126 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #3A3A3A;
+}
+
+.container {
+  margin: 50px auto;
+  width: 80%;
+}
+
+.header {
+  text-align: left;
+  color: white;
+}
+
+.header h1 {
+  margin: 0;
+  background: #222222;
+  padding: 10px;
+}
+
+.main-section {
+  padding: 10px;
+  background-color: #222222;
+}
+
+.footer {
+  font-size: small;
+  text-align: center;
+  color: white;
+}
+
+.text--justified {
+  text-align: justify;
+}
+
+.ui-control {
+  border-color: black;
+  background-color: #222222;
+  border-width: 1px;
+  padding: 1px;
+  font-size: 16px;
+}
+
+.ui-control:focus {
+  outline: none;
+}
+
+.ui-button {
+  height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: white;
+}
+
+.ui-button:hover {
+  background-color: #444444;
+}
+
+.ui-input {
+  height: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.data-table {
+  border-collapse: collapse;
+}
+
+.data-table td, .data-table th {
+  padding: 6px;
+  color: white;
+}
+
+.data-table th {
+  text-align: center;
+}
+
+.data-table thead {
+  font-weight: bold;
+  background-color: #222222;
+  color: white;
+}
+
+.data-table tbody tr:hover {
+  background-color: #330099;
+}
+
+input {
+  color: white;
+}
+
+label {
+  color: white;
+}
+
+.author__form {
+  display: grid;
+  grid-template-columns: 120px 200px;
+  grid-gap: 10px;
+}
+
+.author__form label {
+  color: white;
+}
+
+.author__form input {
+  color: white;
+}
+
+.song__form {
+  display: grid;
+  grid-template-columns: 120px 200px;
+  grid-gap: 10px;
+}
+
+.song__form label {
+  color: white;
+}
+
+.song__form input {
+  color: white;
+}
+

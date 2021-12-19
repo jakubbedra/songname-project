@@ -1,0 +1,39 @@
+.game-div {
+  display: flex;
+  justify-content: center;
+  background-color: #151515;
+  padding-bottom: 10%;
+  padding-top: 5%;
+}
+
+.players-div {
+  display: inline-block;
+  float: right;
+}
+
+.players-table {
+  color: white;
+}
+
+.players-table td {
+  text-align: center;
+  font-size: 16px;
+}
+
+.players-table td a {
+  padding-right: 100%;
+}
+
+.winner {
+  background-color: #330099;
+}
+
+.exit-button {
+  height: 50px;
+  width: 100%;
+  color: white;
+}
+
+.exit-button:hover {
+  background-color: #444444;
+}

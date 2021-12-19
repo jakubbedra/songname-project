@@ -1,0 +1,22 @@
+<article class="text--justified">
+  <div class="data--admin">
+    <header class="header"><h2>JSON data</h2></header>
+    <p>Import or export data from/to a file stored in the downloaded files directory.</p>
+    <form class="song__form">
+      <label for="import">import from file:</label>
+      <input
+        class="ui-button ui-control"
+        type="button"
+        value="import"
+        id="import"
+        (click)="onImport()"/>
+      <label for="export">export to file:</label>
+      <input
+        class="ui-button ui-control"
+        type="button"
+        value="export"
+        id="export"
+        (click)="onExport()"/>
+    </form>
+  </div>
+</article>

@@ -1,0 +1,22 @@
+<article class="text--justified">
+  <header><h2 class="header">Game configuration:</h2></header>
+  <form class="player__form" id="turnForm">
+    <table>
+      <tr>
+        <td><label for="turns">Rounds: </label></td>
+        <td><input
+          class="ui-control ui-input"
+          type="number"
+          min="5" max="20"
+          id="turns" name="turns"
+          value="10"
+          (change)="onTurnChange(turns.value)"
+          #turns/></td>
+      </tr>
+      <tr>
+        <td><label>Select Authors: </label></td>
+        <td>Select authors</td>
+      </tr>
+    </table>
+  </form>
+</article>

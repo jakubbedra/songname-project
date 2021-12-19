@@ -1,0 +1,26 @@
+<div class="game-div">
+  <div class="players-div" id="playersDiv">
+    <article class="text--justified">
+      <header class="header"><h2>Results:</h2></header>
+      <table class="players-table">
+        <thead>
+        <tr>
+          <td>Place</td>
+          <td>Player</td>
+          <td>Score</td>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        <tr *ngFor="let player of players; let index = index" [class.winner]="index === 0">
+          <td>{{index + 1}}</td>
+          <td>{{player.name}}</td>
+          <td>{{player.score}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </article>
+  </div>
+</div>
+<div class="exit-div">
+  <button class="exit-button ui-control" (click)="onExitGame()">Exit Game</button>
+</div>

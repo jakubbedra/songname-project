@@ -1,0 +1,34 @@
+<div class="players-div">
+  <article class="text--justified">
+    <header class="header"><h2>Players</h2></header>
+    <table class="data-table">
+      <thead>
+      <tr>
+        <th>name</th>
+        <th>delete</th>
+      </tr>
+      </thead>
+      <tbody id="tableBody">
+      <tr *ngFor="let player of players">
+        <td>{{player.name}}</td>
+        <td>
+          <button class="ui-button ui-control" (click)="onDeletePlayer(player.uuid)">delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <a class="warning" *ngIf="noPlayersWarning">Cannot start a game without players!</a>
+  </article>
+  <article class="text--justified">
+    <header><h2 class="header">Add player</h2></header>
+    <form class="player__form" id="playerForm">
+      <table>
+        <tr>
+          <td><label for="name">Name: </label></td>
+          <td><input class="ui-control ui-input" id="name" #name/></td>
+          <td><input class="ui-control ui-button" value="add" type="button" (click)="onAddPlayer(name.value)"/></td>
+        </tr>
+      </table>
+    </form>
+  </article>
+</div>
