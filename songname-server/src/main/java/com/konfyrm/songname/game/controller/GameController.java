@@ -2,6 +2,7 @@ package com.konfyrm.songname.game.controller;
 
 import com.konfyrm.songname.authors.model.Author;
 import com.konfyrm.songname.authors.service.AuthorsService;
+import com.konfyrm.songname.game.dto.CreateGameRequest;
 import com.konfyrm.songname.game.dto.GameTurnDTO;
 import com.konfyrm.songname.game.model.Game;
 import com.konfyrm.songname.game.service.GameService;
@@ -53,8 +54,8 @@ public class GameController {
     @GetMapping("/{uuid}/turn")
     public ResponseEntity<GameTurnDTO> getCurrentTurn(@PathVariable("uuid") String uuid) {
         Optional<Game> game = gameService.getGame(UUID.fromString(uuid));
-        Optional<Song> song = songsService.getSongById(game.get().getCurrentSong());
         if (game.isPresent()) {
+            Optional<Song> song = songsService.getSongById(game.get().getCurrentSong());
             Player player = playersService.getPlayerByID(game.get().getCurrentPlayer()).get();
             return ResponseEntity.ok(
                     new GameTurnDTO(player, game.get().getCurrentSong(),
@@ -101,13 +102,19 @@ public class GameController {
     }
 
     @PostMapping("/{uuid}/create")
-    public ResponseEntity<Void> createGame(@PathVariable("uuid") String uuid, @RequestParam("turns") String turns) {
+    public ResponseEntity<Void> createGame(@PathVariable("uuid") String uuid, @RequestBody CreateGameRequest request) {
         List<Player> players = playersService.getPlayersByGameId(UUID.fromString(uuid));
         if (players.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        List<Song> songs = songsService.getRandomSongs(Integer.parseInt(turns) * players.size());
-        gameService.createGame(UUID.fromString(uuid), players, songs, Integer.parseInt(turns) * players.size());
+        List<Song> songs = request.getExcludedAuthorUuids().isEmpty()
+                ? songsService.getRandomSongs(request.getTurns() * players.size())
+                : songsService.getRandomSongs(request.getTurns() * players.size(),
+                    request.getExcludedAuthorUuids().stream()
+                            .map(UUID::fromString)
+                            .collect(Collectors.toList())
+        );
+        gameService.createGame(UUID.fromString(uuid), players, songs, request.getTurns() * players.size());
         return ResponseEntity.ok().build();
     }
 

@@ -1,3 +1,7 @@
 .warning {
   color: red;
 }
+
+.ui-input {
+  height: 30px;
+}

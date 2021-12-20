@@ -18,7 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="songname" options="-parameters" />
+      <module name="songname" options="-parameters --add-modules java.base" />
       <module name="songname-server" options="-parameters --add-modules java.base" />
     </option>
   </component>

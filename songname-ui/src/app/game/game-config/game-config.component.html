@@ -1,7 +1,7 @@
 <article class="text--justified">
   <header><h2 class="header">Game configuration:</h2></header>
   <form class="player__form" id="turnForm">
-    <table>
+    <table class="config-table">
       <tr>
         <td><label for="turns">Rounds: </label></td>
         <td><input
@@ -13,9 +13,16 @@
           (change)="onTurnChange(turns.value)"
           #turns/></td>
       </tr>
-      <tr>
-        <td><label>Select Authors: </label></td>
-        <td>Select authors</td>
+      <label>Select Authors: </label>
+      <tr *ngFor="let author of allAuthors; let i=index">
+        <td>{{author.name}}</td>
+        <td>
+          <input
+            class="ui-control ui-input"
+            type="checkbox"
+            checked="checked"
+            (change)="onCheck($event.target.checked, i)"/>
+        </td>
       </tr>
     </table>
   </form>

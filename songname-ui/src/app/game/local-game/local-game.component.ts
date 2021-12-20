@@ -53,7 +53,6 @@ export class LocalGameComponent implements OnInit {
       this.songUuid = response.songUuid;
       this.authorsCount = response.songAuthorsCount;
       this.givenAuthors = [];
-      this.authorsCount = 3;
       for (let i = 0; i < this.authorsCount; i++) {
         this.givenAuthors.push(new Author('uuid', ''));
       }
@@ -88,20 +87,25 @@ export class LocalGameComponent implements OnInit {
       authorNames.push(author.name);
     }
     this.gameService.checkAnswer(authorNames, title, this.songUuid).subscribe(response => {
-      if (response) {
+      if (response !== 0) {
         this.answerState = 1;
       } else {
         this.answerState = -1;
         this.showCorrectAnswer();
       }
-      this.updateCurrentPlayerScore();
+      this.updateCurrentPlayerScore(response);
     });
   }
 
   showCorrectAnswer() {
     this.songsService.fetchSong(this.songUuid).subscribe(response => {
       let songData = response;
-      this.authorRight.nativeElement.value = songData.author;
+      console.log(response);
+      let i = 0;
+      for (let element of this.authorRight.nativeElement.children) {
+        element.value = songData.authors[i];
+        i++;
+      }
       this.titleRight.nativeElement.value = songData.title;
     });
   }
@@ -110,11 +114,11 @@ export class LocalGameComponent implements OnInit {
     this.nextTurn();
   }
 
-  updateCurrentPlayerScore() {
+  updateCurrentPlayerScore(guessedAuthors) {
     if (this.answerState == 1) {
       this.playersService.updatePlayer(
         this.players[this.turn % this.players.length].uuid,
-        this.songPlayer.points
+        this.songPlayer.points + (guessedAuthors - 1) * 0.1 * this.songPlayer.points
       ).subscribe(() => {
         this.fetchPlayers();
       });

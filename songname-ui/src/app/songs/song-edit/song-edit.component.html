@@ -46,7 +46,7 @@
       name="file"
       type="file"
       (change)="onSelectFile($event)"/>
-    <input class="ui-control ui-button save-changes-button" type="submit" value="save changes"/>
+    <input class="ui-control ui-button save-changes-button" type="button" (click)="onFileSave()" value="save changes"/>
   </form>
 </article>
 

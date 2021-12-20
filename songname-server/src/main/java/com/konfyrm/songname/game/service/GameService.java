@@ -8,6 +8,7 @@ import com.konfyrm.songname.songs.model.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -54,7 +55,7 @@ public class GameService {
     }
 
     public int compareAnswers(List<String> answers, List<String> real) {
-        List<String> realAnswers = List.copyOf(real);
+        List<String> realAnswers = new LinkedList<>(real);
         for (String answer : answers) {
             boolean correct = false;
             String toRemove = "";

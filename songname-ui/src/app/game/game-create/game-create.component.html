@@ -7,5 +7,10 @@
   </div>
 </div>
 <div class="start-div">
-  <button class="start-button ui-control ui-button" id="start" (click)="onStartGame(gameConfig.turns)">Start Game</button>
+  <button
+    class="start-button ui-control ui-button"
+    id="start"
+    (click)="onStartGame(gameConfig.turns, gameConfig.selectedAuthorUuids)">
+    Start Game
+  </button>
 </div>

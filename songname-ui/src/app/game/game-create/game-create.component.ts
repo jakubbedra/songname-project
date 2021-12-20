@@ -34,14 +34,15 @@ export class GameCreateComponent implements OnInit {
     });
   }
 
-  onStartGame(turns: string) {
+  onStartGame(turns: string, excludedAuthorUuids: string[]) {
     if (this.playerList.players.length === 0) {
       this.playerList.noPlayersWarning = true;
       return;
     }
-    const gameConfigData = new GameConfigData(turns);
-    this.gameService.createGame(this.uuid, gameConfigData).subscribe();
-    this.router.navigate(['/game/local/' + this.uuid]);
+    const gameConfigData = new GameConfigData(turns, excludedAuthorUuids);
+    this.gameService.createGame(this.uuid, gameConfigData).subscribe(response => {
+      this.router.navigate(['/game/local/' + this.uuid]);
+    });
   }
 
 }

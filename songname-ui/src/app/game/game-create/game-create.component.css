@@ -29,9 +29,11 @@
 .config-div {
   display: inline-block;
   float: right;
+  padding-left: 40px;
 }
 
 .center-div {
   display: flex;
   justify-content: center;
+  padding-right: 40px;
 }

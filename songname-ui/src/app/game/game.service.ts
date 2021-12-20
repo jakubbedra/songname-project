@@ -44,8 +44,8 @@ export class GameService {
   }
 
   createGame(uuid: string, data: GameConfigData) {
-    return this.http.post(environment.apiURL + '/api/game/' + uuid + '/create?turns=' + data.turns,
-      null, {observe: 'response'});
+    return this.http.post(environment.apiURL + '/api/game/' + uuid + '/create',
+      data, {observe: 'response'});
   }
 
   finishGame(uuid: string) {
@@ -59,13 +59,13 @@ export class GameService {
       }));
   }
 
-  checkAnswer(authorNames: string[], title: string, uuid: string): Observable<boolean> {
+  checkAnswer(authorNames: string[], title: string, uuid: string): Observable<number> {
     const songGuessData = {
       authorNames: authorNames,
       title: title,
       uuid: uuid
     };
-    return this.http.post<boolean>(environment.apiURL + '/api/game/check', songGuessData, {observe: 'response'})
+    return this.http.post<number>(environment.apiURL + '/api/game/check', songGuessData, {observe: 'response'})
       .pipe(map(response => {
         return response.body;
       }));

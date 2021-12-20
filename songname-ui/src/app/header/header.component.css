@@ -30,6 +30,6 @@
 
 .logo-img {
   float: left;
-  width: 4.5%;
-  height: 4.5%;
+  object-fit: cover;
+  width: 58px;
 }

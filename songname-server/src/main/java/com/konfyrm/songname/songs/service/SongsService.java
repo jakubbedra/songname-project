@@ -21,6 +21,8 @@ public class SongsService {
     private final AuthorsRepository authorsRepository;
     private final SongFilesRepository filesRepository;
 
+    private final Random r;
+
     @Autowired
     public SongsService(
             SongsRepository songsRepository,
@@ -30,6 +32,7 @@ public class SongsService {
         this.songsRepository = songsRepository;
         this.authorsRepository = authorsRepository;
         this.filesRepository = songFilesRepository;
+        r = new Random();
     }
 
     public List<Song> getAllSongs() {
@@ -44,7 +47,7 @@ public class SongsService {
         Optional<Author> author = authorsRepository.findById(authorUuid);
         List<Song> songs = (List<Song>) songsRepository.findAll();
         return songs.stream()
-                .filter(s -> authorshipExists(author.get(), s))
+                .filter(s -> authorshipExists(s, author.get()))
                 .collect(Collectors.toList());
     }
 
@@ -52,20 +55,25 @@ public class SongsService {
         if (count < 0) {
             return Collections.emptyList();
         }
-        Random r = new Random();
         List<Song> allSongs = getAllSongs();
         if (allSongs.size() < count) {
             throw new IllegalStateException("Not enough songs to choose from. \nSelected count: " +
                     count + "\nAvailable songs: " + allSongs.size());
         }
-        List<Song> songs = new ArrayList<>();
 
-        for (int i = 0; i < count; i++) {
-            int rand = r.nextInt(allSongs.size());
-            songs.add(allSongs.get(rand));
-            allSongs.remove(rand);
+        return selectRandomSongs(allSongs, count);
+    }
+
+    public List<Song> getRandomSongs(int count, List<UUID> excludedAuthors) {
+        if (count < 0) {
+            return Collections.emptyList();
         }
-        return songs;
+        List<Song> allSongs = getAllSongs();
+        if (allSongs.size() < count) {
+            throw new IllegalStateException("Not enough songs to choose from. \nSelected count: " +
+                    count + "\nAvailable songs: " + allSongs.size());
+        }
+        return selectRandomSongs(filterSongList(allSongs, excludedAuthors), count);
     }
 
     @Transactional
@@ -117,8 +125,34 @@ public class SongsService {
         });
     }
 
-    private boolean authorshipExists(Author author, Song song) {
+    private boolean authorshipExists(Song song, Author author) {
         return song.getAuthors().stream().anyMatch(a -> a.getUuid().equals(author.getUuid()));
+    }
+
+    private boolean authorshipExists(Song song, UUID authorUuid) {
+        return song.getAuthors().stream().anyMatch(a -> a.getUuid().equals(authorUuid));
+    }
+
+    private List<Song> filterSongList(List<Song> songs, List<UUID> excludedAuthors) {
+        return songs.stream().filter(s -> {
+            for (UUID author : excludedAuthors) {
+                if (authorshipExists(s, author)) {
+                    return false;
+                }
+            }
+            return true;
+        }).collect(Collectors.toList());
+    }
+
+    private List<Song> selectRandomSongs(List<Song> songs, int count) {
+        List<Song> selectedSongs = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            int rand = r.nextInt(songs.size());
+            selectedSongs.add(songs.get(rand));
+            songs.remove(rand);
+        }
+        return selectedSongs;
     }
 
 }
