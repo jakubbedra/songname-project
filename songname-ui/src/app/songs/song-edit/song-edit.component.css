@@ -1,3 +1,11 @@
+.song__form {
+  display: inline-block;
+}
+
+.song__form input {
+  height: 24px;
+}
+
 .ui-button {
   padding-left: 5%;
   padding-right: 5%;
@@ -8,6 +16,27 @@
 .authors-list-div {
   padding-top: 15px;
   padding-bottom: 25px;
+}
+
+.song-table {
+  padding-bottom: 24px;
+}
+
+.song-table tr {
+  padding-bottom: 16px;
+}
+
+.song-table label {
+  padding-right: 24px;
+}
+
+.add-author-button {
+  padding-right: 100%;
+  padding-left: 100%;
+}
+
+.save-changes-button {
+  width: 100%;
 }
 
 button {

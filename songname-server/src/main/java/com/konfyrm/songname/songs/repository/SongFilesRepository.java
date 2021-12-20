@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
-import java.net.URL;
 import java.util.UUID;
 
 @Repository
@@ -15,7 +14,7 @@ public class SongFilesRepository {
 
     @Autowired
     public SongFilesRepository(
-            @Value("${songname.uploaded.files.dir}") String uploadedFilesDirectory
+            @Value("${songname.uploaded-files-dir}") String uploadedFilesDirectory
     ) {
         this.songFilesDirectory = uploadedFilesDirectory + "/songs/";
     }

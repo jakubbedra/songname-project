@@ -53,10 +53,12 @@ public class GameController {
     @GetMapping("/{uuid}/turn")
     public ResponseEntity<GameTurnDTO> getCurrentTurn(@PathVariable("uuid") String uuid) {
         Optional<Game> game = gameService.getGame(UUID.fromString(uuid));
+        Optional<Song> song = songsService.getSongById(game.get().getCurrentSong());
         if (game.isPresent()) {
             Player player = playersService.getPlayerByID(game.get().getCurrentPlayer()).get();
             return ResponseEntity.ok(
-                    new GameTurnDTO(player, game.get().getCurrentSong(), game.get().getCurrentTurn())
+                    new GameTurnDTO(player, game.get().getCurrentSong(),
+                            song.get().getAuthors().size(), game.get().getCurrentTurn())
             );
         } else {
             return ResponseEntity.notFound().build();
@@ -82,15 +84,18 @@ public class GameController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity<Boolean> checkSong(@RequestBody CheckSongRequest request) {
+    public ResponseEntity<Integer> checkSong(@RequestBody CheckSongRequest request) {
         Optional<Song> song = songsService.getSongById(request.getUuid());
         if (song.isPresent()) {
             List<Author> authors = song.get().getAuthors();
-            return ResponseEntity.ok(
-                    gameService.compareAnswer(request.getTitle(), song.get().getTitle()) &&
-                            gameService.compareAnswers(request.getAuthorNames(),
-                                    authors.stream().map(Author::getName).collect(Collectors.toList())
-                            ));
+            if(gameService.compareAnswer(request.getTitle(), song.get().getTitle())){
+                return ResponseEntity.ok(
+                        gameService.compareAnswers(request.getAuthorNames(),
+                                authors.stream().map(Author::getName).collect(Collectors.toList())
+                        ));
+            } else {
+                return ResponseEntity.ok(0);
+            }
         }
         return ResponseEntity.notFound().build();
     }

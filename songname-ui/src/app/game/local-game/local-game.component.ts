@@ -5,6 +5,7 @@ import {SongPlayer} from "../../songs/song-player";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PlayersService} from "../players.service";
 import {SongsService} from "../../songs/songs.service";
+import {Author} from "../../authors/author.model";
 
 @Component({
   selector: 'app-local-game',
@@ -13,16 +14,19 @@ import {SongsService} from "../../songs/songs.service";
 })
 export class LocalGameComponent implements OnInit {
 
-  @ViewChild('author') authorRight: ElementRef;
+  @ViewChild('authors') authorRight: ElementRef;
   @ViewChild('title') titleRight: ElementRef;
 
   uuid: string;
   songUuid: string;
   songPlayer: SongPlayer;
   players: Player[];
+  givenAuthors: Author[];
+  authorsCount: number;
   turn: number;
   answerState: number;
   round: number;
+  inputDisabled: boolean;
 
   constructor(
     private gameService: GameService,
@@ -34,6 +38,7 @@ export class LocalGameComponent implements OnInit {
     this.turn = 0;
     this.answerState = 0;
     this.round = 1;
+    this.inputDisabled = false;
   }
 
   ngOnInit(): void {
@@ -46,6 +51,12 @@ export class LocalGameComponent implements OnInit {
   fetchTurnData() {
     this.gameService.fetchTurn(this.uuid).subscribe(response => {
       this.songUuid = response.songUuid;
+      this.authorsCount = response.songAuthorsCount;
+      this.givenAuthors = [];
+      this.authorsCount = 3;
+      for (let i = 0; i < this.authorsCount; i++) {
+        this.givenAuthors.push(new Author('uuid', ''));
+      }
       this.songPlayer.fetchSong(this.songUuid);
     });
   }
@@ -64,10 +75,19 @@ export class LocalGameComponent implements OnInit {
     this.songPlayer.incrementTime();
   }
 
-  onGuess(author: string, title: string) {
-    this.authorRight.nativeElement.disabled = true;
+  onAuthorUpdate(name: string, ind: number) {
+    this.givenAuthors[ind].name = name;
+  }
+
+  onGuess(title: string) {
+    this.inputDisabled = true;
     this.titleRight.nativeElement.disabled = true;
-    this.gameService.checkAnswer(author, title, this.songUuid).subscribe(response => {
+    console.log(this.givenAuthors);
+    const authorNames: string[] = [];
+    for (let author of this.givenAuthors) {
+      authorNames.push(author.name);
+    }
+    this.gameService.checkAnswer(authorNames, title, this.songUuid).subscribe(response => {
       if (response) {
         this.answerState = 1;
       } else {
@@ -95,7 +115,7 @@ export class LocalGameComponent implements OnInit {
       this.playersService.updatePlayer(
         this.players[this.turn % this.players.length].uuid,
         this.songPlayer.points
-      ).subscribe( () => {
+      ).subscribe(() => {
         this.fetchPlayers();
       });
     }
@@ -117,7 +137,7 @@ export class LocalGameComponent implements OnInit {
   }
 
   private resetInput() {
-    this.authorRight.nativeElement.disabled = false;
+    this.inputDisabled = false;
     this.authorRight.nativeElement.value = '';
     this.titleRight.nativeElement.disabled = false;
     this.titleRight.nativeElement.value = '';

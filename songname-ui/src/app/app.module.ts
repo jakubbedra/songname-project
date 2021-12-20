@@ -22,6 +22,7 @@ import { GameConfigComponent } from './game/game-config/game-config.component';
 import { DataAdminPanelComponent } from './data-administration/data-admin-panel/data-admin-panel.component';
 import { LocalGameComponent } from './game/local-game/local-game.component';
 import { GameResultsComponent } from './game/game-results/game-results.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -41,11 +42,12 @@ import { GameResultsComponent } from './game/game-results/game-results.component
     LocalGameComponent,
     GameResultsComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
   providers: [
     AuthorsService,
     SongsService,

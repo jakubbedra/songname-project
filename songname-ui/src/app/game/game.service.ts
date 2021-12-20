@@ -59,9 +59,9 @@ export class GameService {
       }));
   }
 
-  checkAnswer(authorName: string, title: string, uuid: string): Observable<boolean> {
+  checkAnswer(authorNames: string[], title: string, uuid: string): Observable<boolean> {
     const songGuessData = {
-      authorName: authorName,
+      authorNames: authorNames,
       title: title,
       uuid: uuid
     };

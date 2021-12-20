@@ -53,7 +53,7 @@ public class GameService {
         return answersManager.compare(answer, real);
     }
 
-    public boolean compareAnswers(List<String> answers, List<String> real) {
+    public int compareAnswers(List<String> answers, List<String> real) {
         List<String> realAnswers = List.copyOf(real);
         for (String answer : answers) {
             boolean correct = false;
@@ -69,7 +69,7 @@ public class GameService {
                 realAnswers.remove(toRemove);
             }
         }
-        return realAnswers.size() == 0;
+        return real.size() - realAnswers.size();
     }
 
 }

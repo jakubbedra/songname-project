@@ -4,19 +4,36 @@
     <h4>Authors:</h4>
     <span>
       <span *ngFor="let author of selectedAuthorUuids; let last = last;">
-        {{authorName(author)}}<p *ngIf="!last">,&nbsp;</p>
+        {{authorName(author)}}<span *ngIf="!last">,&nbsp;</span>
       </span>
     </span>
   </div>
   <form class="song__form" id="songForm">
-    <input list="authors" class="ui-control ui-input" id="author" #author/>
-    <datalist id="authors">
-      <option *ngFor="let author of authors" value="{{author.uuid}}">{{author.name}}</option>
-    </datalist>
-    <input class="ui-control ui-button" type="button" (click)="onAuthorAdd(author.value)" value="Add author"/>
-    <label for="title">Title: </label>
-    <input class="ui-control ui-input" id="title" name="title" #title/>
-    <input class="ui-control ui-button" type="button" (click)="onDataSave(title.value)" value="save changes"/>
+    <table class="song-table">
+      <tr>
+        <td>
+          <label for="author">Author: </label>
+        </td>
+        <td>
+          <input list="authors" class="ui-control ui-input" id="author" #author/>
+          <datalist id="authors">
+            <option *ngFor="let author of authors" value="{{author.uuid}}">{{author.name}}</option>
+          </datalist>
+        </td>
+        <td>
+          <input class="ui-control ui-button add-author-button" type="button" (click)="onAuthorAdd(author.value)" value="+"/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="title">Title: </label>
+        </td>
+        <td>
+          <input class="ui-control ui-input" id="title" name="title" #title/>
+        </td>
+      </tr>
+    </table>
+    <input class="ui-control ui-button save-changes-button" type="button" (click)="onDataSave(title.value)" value="save changes"/>
   </form>
 </article>
 <article class="text--justified">
@@ -29,7 +46,7 @@
       name="file"
       type="file"
       (change)="onSelectFile($event)"/>
-    <input class="ui-control ui-button" type="submit" value="save changes"/>
+    <input class="ui-control ui-button save-changes-button" type="submit" value="save changes"/>
   </form>
 </article>
 

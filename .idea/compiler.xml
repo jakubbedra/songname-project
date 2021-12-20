@@ -8,14 +8,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="songname-server" />
+        <module name="songname" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="songname" target="11" />
       <module name="songname-server" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="songname" options="-parameters" />
       <module name="songname-server" options="-parameters --add-modules java.base" />
     </option>
   </component>

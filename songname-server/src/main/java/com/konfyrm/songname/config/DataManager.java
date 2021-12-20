@@ -30,7 +30,7 @@ public class DataManager {
     public DataManager(
             SongsService songsService,
             AuthorsService authorsService,
-            @Value("${songname.uploaded.files.dir}") String uploadedFilesDirectory
+            @Value("${songname.uploaded-files-dir}") String uploadedFilesDirectory
     ) {
         this.jsonFilesDirectory = uploadedFilesDirectory + "/json_data/";
         this.songsService = songsService;

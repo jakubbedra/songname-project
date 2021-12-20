@@ -21,24 +21,29 @@
       </table>
       <div class="guess-div">
         <form class="guess__form" id="guessForm">
-          <label for="author">Author: </label>
-          <input
-            [class.answer-wrong]="answerState === -1"
-            class="ui-control ui-input game-input"
-            id="author"
-            #author/>
+          <label for="author" *ngIf="authorsCount === 1">Author: </label>
+          <label for="author" *ngIf="authorsCount !== 1">Authors: </label>
+          <div #authors>
+            <input *ngFor="let givenAuthor of givenAuthors; let i=index;"
+                   (input)="onAuthorUpdate($event.target.value, i)"
+                   [class.answer-wrong]="answerState === -1"
+                   [disabled]="inputDisabled"
+                   class="ui-control ui-input game-input"
+                   id="author"/>
+          </div>
           <label for="title">Title: </label>
           <input
             [class.answer-wrong]="answerState === -1"
             class="ui-control ui-input game-input"
             id="title"
+            value=""
             #title/>
           <input *ngIf="answerState === 0"
                  class="ui-control guess-button"
                  type="button"
                  value="GUESS"
                  id="guessButton"
-                 (click)="onGuess(author.value, title.value)"/>
+                 (click)="onGuess(title.value)"/>
           <input *ngIf="answerState !== 0"
                  class="ui-control guess-button"
                  type="button"

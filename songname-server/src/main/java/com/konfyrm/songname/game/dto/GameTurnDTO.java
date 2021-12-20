@@ -33,11 +33,13 @@ public class GameTurnDTO {
 
     private PlayerDTO player;
     private UUID songUuid;
+    private int songAuthorsCount;
     private int turn;
 
-    public GameTurnDTO(Player player, UUID songUuid, int turn) {
+    public GameTurnDTO(Player player, UUID songUuid, int songAuthorsCount, int turn) {
         this.player = new PlayerDTO(player.getUuid(), player.getName(), player.getScore());
         this.songUuid = songUuid;
+        this.songAuthorsCount = songAuthorsCount;
         this.turn = turn;
     }
 
@@ -47,6 +49,10 @@ public class GameTurnDTO {
 
     public UUID getSongUuid() {
         return songUuid;
+    }
+
+    public int getSongAuthorsCount() {
+        return songAuthorsCount;
     }
 
     public int getTurn() {
