@@ -32,7 +32,6 @@ export class GameConfigComponent implements OnInit {
     } else {
       this.selectedAuthorUuids = this.selectedAuthorUuids.filter(uuid => uuid !== this.allAuthors[ind].uuid);
     }
-    console.log(this.selectedAuthorUuids);
   }
 
   onTurnChange(turns: string) {

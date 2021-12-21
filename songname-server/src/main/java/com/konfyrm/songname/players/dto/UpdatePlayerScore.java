@@ -2,21 +2,21 @@ package com.konfyrm.songname.players.dto;
 
 public class UpdatePlayerScore {
 
-    private int points;
+    private float points;
 
     public UpdatePlayerScore() {
 
     }
 
-    public UpdatePlayerScore(int points) {
+    public UpdatePlayerScore(float points) {
         this.points = points;
     }
 
-    public int getPoints() {
+    public float getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(float points) {
         this.points = points;
     }
 

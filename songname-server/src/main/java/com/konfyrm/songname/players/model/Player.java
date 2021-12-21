@@ -13,7 +13,7 @@ public class Player implements Serializable {
     @Id
     private UUID uuid;
     private String name;
-    private int score;
+    private float score;
     private UUID gameUuid; //uuid for the game session todo: maybe remove dunno, its already contained in Game
 
     public Player() {
@@ -22,18 +22,18 @@ public class Player implements Serializable {
     public Player(String name, UUID gameUuid) {
         this.uuid = UUID.randomUUID();
         this.name = name;
-        this.score = 0;
+        this.score = 0.0f;
         this.gameUuid = gameUuid;
     }
 
-    public Player(UUID uuid, String name, int score, UUID gameUuid) {
+    public Player(UUID uuid, String name, float score, UUID gameUuid) {
         this.uuid = uuid;
         this.name = name;
         this.score = score;
         this.gameUuid = gameUuid;
     }
 
-    public void increaseScore(int points) {
+    public void increaseScore(float points) {
         this.score += points;
     }
 
@@ -45,7 +45,7 @@ public class Player implements Serializable {
         return name;
     }
 
-    public int getScore() {
+    public float getScore() {
         return score;
     }
 

@@ -39,7 +39,6 @@ export class SongEditComponent implements OnInit {
   }
 
   onAuthorAdd(uuid: string) {
-    console.log(uuid);
     this.selectedAuthorUuids.push(uuid);
     this.authorSelect.nativeElement.value = "";
   }

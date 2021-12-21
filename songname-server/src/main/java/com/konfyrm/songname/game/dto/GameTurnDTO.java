@@ -9,9 +9,9 @@ public class GameTurnDTO {
     public class PlayerDTO {
         private UUID uuid;
         private String name;
-        private int score;
+        private float score;
 
-        public PlayerDTO(UUID uuid, String name, int score) {
+        public PlayerDTO(UUID uuid, String name, float score) {
             this.uuid = uuid;
             this.name = name;
             this.score = score;
@@ -25,7 +25,7 @@ public class GameTurnDTO {
             return name;
         }
 
-        public int getScore() {
+        public float getScore() {
             return score;
         }
 

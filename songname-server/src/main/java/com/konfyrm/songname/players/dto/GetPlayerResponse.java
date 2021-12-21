@@ -8,7 +8,7 @@ public class GetPlayerResponse {
 
     private UUID uuid;
     private String name;
-    private int score;
+    private float score;
 
     public GetPlayerResponse(Player player) {
         this.uuid = player.getUuid();
@@ -24,7 +24,7 @@ public class GetPlayerResponse {
         return name;
     }
 
-    public int getScore() {
+    public float getScore() {
         return score;
     }
 

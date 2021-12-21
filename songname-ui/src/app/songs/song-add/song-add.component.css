@@ -1,0 +1,17 @@
+.song__form input {
+  height: 24px;
+}
+
+.song-add-button {
+  width: 100%;
+}
+
+.authors-list-div {
+  padding-top: 15px;
+  padding-bottom: 25px;
+  color: white;
+}
+
+h4 {
+  color: white;
+}

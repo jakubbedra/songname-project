@@ -74,16 +74,6 @@ public class GameController {
         );
     }
 
-    @GetMapping("/{uuid}/results")
-    public ResponseEntity<GetPlayersResponse> getResults(@PathVariable("uuid") String uuid) {
-        List<Player> players = playersService.getPlayersByGameId(UUID.fromString(uuid)).stream()
-                .sorted(Comparator.comparingInt(Player::getScore).reversed())
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(
-                new GetPlayersResponse(players)
-        );
-    }
-
     @PostMapping("/check")
     public ResponseEntity<Integer> checkSong(@RequestBody CheckSongRequest request) {
         Optional<Song> song = songsService.getSongById(request.getUuid());
